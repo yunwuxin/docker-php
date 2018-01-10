@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 #安装git
 RUN add-apt-repository ppa:git-core/ppa
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -o Acquire::http::proxy="http://118.193.190.114:3128/" && apt-get -o Acquire::http::proxy="http://118.193.190.114:3128/" install -y \
         mysql-client-5.7 \
         git
 
