@@ -8,6 +8,6 @@ stages:
 build:
   stage: build
   script:
-    - docker build --pull -t registry.topthink.com/yunwuxin/php:$CI_COMMIT_REF_NAME .
+    - docker build --pull -t registry.topthink.com/yunwuxin/php:$CI_COMMIT_REF_NAME --build-arg http_proxy=http://118.193.190.114:3128 --build-arg no_proxy=mirrors.aliyun.com .
     - docker push registry.topthink.com/yunwuxin/php:$CI_COMMIT_REF_NAME
 

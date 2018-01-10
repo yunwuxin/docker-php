@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 #安装git
 RUN add-apt-repository ppa:git-core/ppa
 
-RUN apt-get update -o Acquire::http::proxy="http://118.193.190.114:3128/" && apt-get -o Acquire::http::proxy="http://118.193.190.114:3128/" install -y \
+RUN apt-get update && apt-get install -y \
         mysql-client-5.7 \
         git
 
@@ -22,29 +22,29 @@ ENV \
 
 RUN C_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
-RUN apt-get update -o Acquire::http::proxy="http://118.193.190.114:3128/" && apt-get install -o Acquire::http::proxy="http://118.193.190.114:3128/" -y \
-        php5.6 \
-        php5.6-dev \
-        php5.6-cli \
-        php5.6-bcmath \
-        php5.6-bz2 \
-        php5.6-dba \
-        php5.6-imap \
-        php5.6-intl \
-        php5.6-mcrypt \
-        php5.6-soap \
-        php5.6-tidy \
-        php5.6-curl \
-        php5.6-gd \
-        php5.6-mysql \
-        php5.6-sqlite \
-        php5.6-xml \
-        php5.6-zip \
-        php5.6-mbstring \
-        php5.6-gettext \
-        php5.6-xdebug \
-        php5.6-redis \
-        libapache2-mod-php5.6 \
+RUN apt-get update && apt-get install -y \
+        php7.1 \
+        php7.1-dev \
+        php7.1-cli \
+        php7.1-bcmath \
+        php7.1-bz2 \
+        php7.1-dba \
+        php7.1-imap \
+        php7.1-intl \
+        php7.1-mcrypt \
+        php7.1-soap \
+        php7.1-tidy \
+        php7.1-curl \
+        php7.1-gd \
+        php7.1-mysql \
+        php7.1-sqlite \
+        php7.1-xml \
+        php7.1-zip \
+        php7.1-mbstring \
+        php7.1-gettext \
+        php7.1-xdebug \
+        php7.1-redis \
+        libapache2-mod-php7.1 \
         && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -r ppa:git-core/ppa
