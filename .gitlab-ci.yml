@@ -1,0 +1,13 @@
+image: docker
+before_script:
+  - docker login -u yunwuxin -p $REGISTRY_PASSWORD registry.topthink.com
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t registry.topthink.com/yunwuxin/php:$CI_COMMIT_REF_NAME .
+    - docker push registry.topthink.com/yunwuxin/php:$CI_COMMIT_REF_NAME
+
