@@ -35,13 +35,11 @@ RUN apt-get update && apt-get install -y \
         php7.2-dba \
         php7.2-imap \
         php7.2-intl \
-        php7.2-mcrypt \
         php7.2-soap \
         php7.2-tidy \
         php7.2-curl \
         php7.2-gd \
         php7.2-mysql \
-        php7.2-sqlite \
         php7.2-xml \
         php7.2-zip \
         php7.2-mbstring \
