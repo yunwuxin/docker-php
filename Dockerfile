@@ -56,6 +56,8 @@ ADD composer.phar /usr/local/bin/composer
 
 RUN chmod 755 /usr/local/bin/composer
 
+RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
+
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
 
