@@ -3,7 +3,6 @@ FROM ubuntu:16.04
 ADD sources.list    /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
-        supervisor \
         vim \
         software-properties-common \
         python-software-properties \
@@ -53,21 +52,7 @@ RUN add-apt-repository -r ppa:ondrej/php
 
 #安装composer
 ADD composer.phar /usr/local/bin/composer
-
 RUN chmod 755 /usr/local/bin/composer
-
-RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
-
-# 安装supervisor工具
-RUN mkdir -p /var/log/supervisor
-
-ADD supervisord.conf    /etc/supervisor/supervisord.conf
-
-RUN usermod -u 1000 www-data
-RUN groupmod -g 1000 www-data
-
-EXPOSE 80 443 22
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 WORKDIR /opt/htdocs
-
-CMD /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
