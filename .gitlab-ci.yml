@@ -3,10 +3,13 @@ image: docker
 stages:
   - build
 
+services:
+  - docker:dind
+
 build:
   stage: build
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
   script:
-    - docker build --pull -t yunwuxin/php:$CI_COMMIT_REF_NAME .
-    - docker push yunwuxin/php:$CI_COMMIT_REF_NAME
+    - docker build --pull -t topthink/php:$CI_COMMIT_REF_NAME .
+    - docker push topthink/php:$CI_COMMIT_REF_NAME
