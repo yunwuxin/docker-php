@@ -13,3 +13,5 @@ build:
   script:
     - docker build --pull -t topthink/php:$CI_COMMIT_REF_NAME .
     - docker push topthink/php:$CI_COMMIT_REF_NAME
+  tags:
+    - docker
