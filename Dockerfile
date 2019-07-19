@@ -50,6 +50,9 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository -r ppa:git-core/ppa
 RUN add-apt-repository -r ppa:ondrej/php
 
+RUN usermod -u 1000 www-data
+RUN groupmod -g 1000 www-data
+
 #安装composer
 ADD composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
