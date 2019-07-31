@@ -57,5 +57,7 @@ RUN groupmod -g 1000 www-data
 ADD composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+RUN composer global require hirak/prestissimo
+RUN composer clear-cache
 
 WORKDIR /opt/htdocs
