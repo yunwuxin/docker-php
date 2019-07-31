@@ -2,19 +2,19 @@ FROM ubuntu:16.04
 
 ADD sources.list    /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y \
-        vim \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         software-properties-common \
         python-software-properties \
-        locales \
-        && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+        locales
 
 #安装git
 RUN add-apt-repository ppa:git-core/ppa
 
-RUN apt-get update && apt-get install -y \
-        mysql-client-5.7 \
-        git
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        unzip \
+        git \
+        ca-certificates \
+        curl
 
 RUN locale-gen en_GB.utf8 en_US.utf8 es_ES.utf8 de_DE.UTF-8
 
