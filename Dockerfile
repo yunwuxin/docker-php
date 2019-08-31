@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN add-apt-repository ppa:git-core/ppa
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        supervisor \
         unzip \
         git \
         ca-certificates \
@@ -43,15 +44,24 @@ RUN apt-get update && apt-get install -y \
         php7.2-zip \
         php7.2-mbstring \
         php7.2-gettext \
-        php7.2-xdebug \
         php7.2-redis \
         && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN add-apt-repository -r ppa:git-core/ppa
 RUN add-apt-repository -r ppa:ondrej/php
 
+RUN pecl install swoole
+RUN echo "extension=swoole.so" > /etc/php/7.2/mods-available/swoole.ini
+RUN phpenmod swoole
+
+# 安装supervisor工具
+RUN mkdir -p /var/log/supervisor
+
+ADD supervisord.conf    /etc/supervisor/supervisord.conf
+
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
+RUN usermod -s /bin/bash www-data
 
 #安装composer
 ADD composer.phar /usr/local/bin/composer
@@ -61,3 +71,5 @@ RUN composer global require hirak/prestissimo
 RUN composer clear-cache
 
 WORKDIR /opt/htdocs
+
+CMD /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
