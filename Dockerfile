@@ -60,6 +60,9 @@ RUN pecl install swoole
 RUN echo "extension=swoole.so" > /etc/php/7.2/mods-available/swoole.ini
 RUN phpenmod swoole
 
+#配置nginx
+ADD nginx.conf /etc/nginx/conf.d/default.conf
+
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
 
