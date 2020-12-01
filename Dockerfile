@@ -69,7 +69,8 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
     ./configure \
     --enable-openssl \
     --enable-http2 && \
-    make && sudo make install
+    make && make install && \
+    rm -rf ~/build
 RUN echo "extension=swoole.so" > /etc/php/7.4/mods-available/swoole.ini
 RUN phpenmod swoole
 
