@@ -58,9 +58,11 @@ RUN add-apt-repository -r ppa:ondrej/php
 
 RUN mkdir -p ~/build && \
     cd ~/build && \
-    rm -rf ./swoole-src && \
-    curl -o ./tmp/swoole.tar.gz https://github.com/swoole/swoole-src/archive/v4.5.9.tar.gz -L && \
-    tar zxvf ./tmp/swoole.tar.gz && \
+    rm -rf ./swoole-src
+
+COPY swoole-src-4.5.9.tar.gz ./tmp/swoole.tar.gz
+
+RUN tar zxvf ./tmp/swoole.tar.gz && \
     mv swoole-src* swoole-src && \
     cd swoole-src && \
     phpize && \
