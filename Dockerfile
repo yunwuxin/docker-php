@@ -56,7 +56,18 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository -r ppa:git-core/ppa
 RUN add-apt-repository -r ppa:ondrej/php
 
-RUN pecl install swoole
+RUN mkdir -p ~/build && \
+    cd ~/build && \
+    rm -rf ./swoole-src && \
+    curl -o ./tmp/swoole.tar.gz https://github.com/swoole/swoole-src/archive/v4.5.9.tar.gz -L && \
+    tar zxvf ./tmp/swoole.tar.gz && \
+    mv swoole-src* swoole-src && \
+    cd swoole-src && \
+    phpize && \
+    ./configure \
+    --enable-openssl \
+    --enable-http2 && \
+    make && sudo make install
 RUN echo "extension=swoole.so" > /etc/php/7.4/mods-available/swoole.ini
 RUN phpenmod swoole
 
