@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN locale-gen en_GB.utf8 en_US.utf8 es_ES.utf8 de_DE.UTF-8
 
 #安装nginx
+RUN apt install gpg-agent -y
 RUN echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
     | tee /etc/apt/sources.list.d/nginx.list
 RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -
