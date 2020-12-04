@@ -2,6 +2,8 @@ FROM topthink/php:7.4
 
 RUN apt-get update && apt-get install -y --no-install-recommends supervisor
 
+RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p ~/build && \
     cd ~/build && \
     rm -rf ./swoole-src
