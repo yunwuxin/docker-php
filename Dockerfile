@@ -1,6 +1,6 @@
 FROM topthink/php:7.4
 
-RUN apt-get update && apt-get install -y --no-install-recommends supervisor
+RUN apt-get update && apt-get install -y --no-install-recommends supervisor libcurl-dev
 
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
