@@ -8,7 +8,7 @@ RUN mkdir -p ~/build && \
     cd ~/build && \
     rm -rf ./swoole-src
 
-COPY swoole-src-4.5.9.tar.gz ./tmp/swoole.tar.gz
+COPY swoole-src-4.6.0.tar.gz ./tmp/swoole.tar.gz
 
 RUN tar zxvf ./tmp/swoole.tar.gz && \
     mv swoole-src* swoole-src && \
@@ -16,6 +16,7 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
     phpize && \
     ./configure \
     --enable-openssl \
+    --enable-swoole-curl \
     --enable-http2 && \
     make && make install && \
     rm -rf ~/build
