@@ -23,7 +23,7 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
 RUN echo "extension=swoole.so" > /etc/php/7.4/mods-available/swoole.ini
 RUN phpenmod swoole
 
-RUN sed -i '/disable_functions =/cdisable_functions = curl_multi_exec'
+RUN sed -i '/disable_functions =/cdisable_functions = curl_multi_exec' /etc/php/7.4/cli/php.ini
 
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
