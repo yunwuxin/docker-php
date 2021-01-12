@@ -8,7 +8,7 @@ RUN mkdir -p ~/build && \
     cd ~/build && \
     rm -rf ./swoole-src
 
-COPY swoole-src-4.6.0.tar.gz ./tmp/swoole.tar.gz
+COPY swoole-src-4.6.1.tar.gz ./tmp/swoole.tar.gz
 
 RUN tar zxvf ./tmp/swoole.tar.gz && \
     mv swoole-src* swoole-src && \
