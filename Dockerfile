@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends supervisor libc
 
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install inotify && RUN echo "extension=inotify.so" > /etc/php/7.4/mods-available/inotify.ini && phpenmod inotify
+RUN pecl install inotify && echo "extension=inotify.so" > /etc/php/7.4/mods-available/inotify.ini && phpenmod inotify
 
 RUN mkdir -p ~/build && \
     cd ~/build && \
