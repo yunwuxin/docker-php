@@ -18,7 +18,6 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
     phpize && \
     ./configure \
     --enable-openssl \
-    --enable-sockets \
     --enable-swoole-curl \
     --enable-http2 && \
     make && make install && \
