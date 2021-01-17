@@ -1,6 +1,7 @@
 on:
   push:
     paths:
+      - '.github/workflows/7.4-swoole.yml'
       - '7.4-swoole/**'
 
 jobs:
