@@ -1,10 +1,10 @@
-FROM topthink/php:7.4
+FROM phpdockerio/php74-cli
 
-RUN apt-get update && apt-get install -y --no-install-recommends supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev
-
-RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
-
-RUN pecl install inotify && echo "extension=inotify.so" > /etc/php/7.4/mods-available/inotify.ini && phpenmod inotify
+RUN \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    php7.4-dev supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p ~/build && \
     cd ~/build && \
@@ -18,6 +18,7 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
     phpize && \
     ./configure \
     --enable-openssl \
+    --enable-sockets \
     --enable-swoole-curl \
     --enable-http2 && \
     make && make install && \
@@ -30,7 +31,7 @@ RUN sed -i '/disable_functions =/cdisable_functions = curl_multi_exec' /etc/php/
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
 
-ADD supervisord.conf    /etc/supervisor/supervisord.conf
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
