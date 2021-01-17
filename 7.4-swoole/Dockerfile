@@ -3,7 +3,7 @@ FROM phpdockerio/php74-cli
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    php7.4-dev supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    build-essential php7.4-dev supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
     apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p ~/build && \
@@ -19,6 +19,7 @@ RUN tar zxvf ./tmp/swoole.tar.gz && \
     ./configure \
     --enable-openssl \
     --enable-swoole-curl \
+    --enable-swoole-json \
     --enable-http2 && \
     make && make install && \
     rm -rf ~/build
