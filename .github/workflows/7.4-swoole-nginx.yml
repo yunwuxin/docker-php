@@ -1,14 +1,10 @@
-name: 7.4 swoole
+name: 7.4 swoole nginx
 on:
   push:
     paths:
-      - '.github/workflows/7.4-swoole.yml'
-      - '7.4-swoole/**'
-  workflow_run:
-    workflows: ["7.4 swoole nginx"]
-    branches: [main]
-    types:
-      - completed
+      - '.github/workflows/7.4-swoole-nginx.yml'
+      - '7.4-swoole-nginx/**'
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -28,8 +24,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./7.4-swoole
+          context: ./7.4-swoole-nginx
           push: true
-          tags: topthink/php:7.4-swoole
+          tags: topthink/php:7.4-swoole-nginx
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

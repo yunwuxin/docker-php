@@ -1,0 +1,14 @@
+FROM topthink/php:7.4-swoole
+
+#安装nginx
+RUN apt-get update && apt install gpg-agent -y
+RUN echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+    | tee /etc/apt/sources.list.d/nginx.list
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -
+RUN apt update && apt install -y nginx
+
+RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+
+#配置nginx
+ADD nginx.conf /etc/nginx/conf.d/default.conf
+ADD supervisord.conf /etc/supervisor/conf.d/nginx.conf
