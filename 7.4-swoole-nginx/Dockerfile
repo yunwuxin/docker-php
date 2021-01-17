@@ -1,7 +1,7 @@
 FROM topthink/php:7.4-swoole
 
 #安装nginx
-RUN apt-get update && apt install gnupg2 lsb_release -y
+RUN apt-get update && apt install gnupg2 lsb_core -y
 RUN echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
     | tee /etc/apt/sources.list.d/nginx.list
 RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -
