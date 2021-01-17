@@ -4,11 +4,7 @@ on:
     paths:
       - '.github/workflows/7.4-swoole.yml'
       - '7.4-swoole/**'
-  workflow_run:
-    workflows: ["7.4 swoole nginx"]
-    branches: [main]
-    types:
-      - completed
+
 jobs:
   build:
     runs-on: ubuntu-20.04
