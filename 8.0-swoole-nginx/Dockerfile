@@ -1,4 +1,4 @@
-FROM topthink/php:7.4-swoole
+FROM topthink/php:8.0-swoole
 
 #安装nginx
 RUN echo "deb http://nginx.org/packages/ubuntu focal nginx" \
