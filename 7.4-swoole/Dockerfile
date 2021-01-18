@@ -3,7 +3,7 @@ FROM phpdockerio/php74-cli
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential php-pear php7.4-dev php7.4-redis php7.4-mysql supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    build-essential php-pear php7.4-dev php7.4-redis php7.4-mysql php7.4-gd supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
     apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN pecl channel-update pecl.php.net
