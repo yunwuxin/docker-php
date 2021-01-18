@@ -3,7 +3,7 @@ FROM phpdockerio/php74-cli
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential php7.4-dev php7.4-pear php7.4-redis supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    build-essential php7.4-dev php-pear php7.4-redis supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
     apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p ~/build && \
