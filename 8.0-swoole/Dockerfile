@@ -3,7 +3,7 @@ FROM phpdockerio/php80-cli
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential php8.0-dev php8.0-redis supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    build-essential php8.0-dev php8.0-pear php8.0-redis supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
     apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p ~/build && \
