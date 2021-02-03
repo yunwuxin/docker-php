@@ -20,9 +20,11 @@ RUN mkdir -p /var/log/supervisor
 
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
+RUN mkdir /var/www
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 RUN usermod -s /bin/bash www-data
+RUN chown -R www-data:www-data /var/www
 
 CMD /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
 
