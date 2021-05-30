@@ -1,5 +1,7 @@
 FROM phpdockerio/php80-cli
 
+ENV TZ=Asia/Shanghai
+
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
