@@ -5,7 +5,7 @@ ENV TZ=Asia/Shanghai
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential php-pear php8.0-dev php8.0-redis php8.0-mysql php8.0-gd php8.0-sqlite3 php8.0-bcmath supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
+    build-essential php-pear php8.0-dev php8.0-redis php8.0-mysql php8.0-gd php8.0-sqlite3 php8.0-bcmath php8.0-intl supervisor libcurl4-openssl-dev zlib1g-dev libssl-dev && \
     apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 RUN pecl channel-update pecl.php.net
