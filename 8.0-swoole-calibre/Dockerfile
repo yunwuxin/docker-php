@@ -29,12 +29,9 @@ RUN rm -rf /tmp/*
 #安装nodejs
 RUN wget -qO- https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt install nodejs
-RUN npm config set registry https://registry.npm.taobao.org/
-RUN npm install -g npm@7.17.0
-COPY docker/.npmrc /var/www/.npmrc
+RUN npm install -g npm@latest
 RUN mkdir -p /var/www/npm-global/bin
 RUN chown www-data:www-data -R /var/www
-
 ENV PATH="/var/www/npm-global/bin:${PATH}"
 RUN echo "PATH=\"/var/www/npm-global/bin:${PATH}\"" > /etc/environment
 
