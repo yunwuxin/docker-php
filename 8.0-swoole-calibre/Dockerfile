@@ -26,6 +26,20 @@ RUN mkfontscale && mkfontdir && fc-cache -fv
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
 RUN rm -rf /tmp/*
 
+#安装nodejs
+RUN wget -qO- https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt install nodejs
+RUN npm config set registry https://registry.npm.taobao.org/
+RUN npm install -g npm@7.17.0
+COPY docker/.npmrc /var/www/.npmrc
+RUN mkdir -p /var/www/npm-global/bin
+RUN chown www-data:www-data -R /var/www
+
+ENV PATH="/var/www/npm-global/bin:${PATH}"
+RUN echo "PATH=\"/var/www/npm-global/bin:${PATH}\"" > /etc/environment
+
+RUN apt install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
 #清理
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
