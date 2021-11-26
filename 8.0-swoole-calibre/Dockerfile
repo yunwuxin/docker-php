@@ -27,7 +27,7 @@ RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev
 RUN rm -rf /tmp/*
 
 #安装nodejs
-RUN wget -qO- https://deb.nodesource.com/setup_lts.x | bash -
+RUN wget -qO- https://deb.nodesource.com/setup_16.x | bash -
 RUN apt install nodejs
 RUN npm install -g npm@latest
 RUN mkdir -p /var/www/npm-global/bin
