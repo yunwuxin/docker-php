@@ -12,6 +12,7 @@ RUN \
     ttf-wqy-zenhei \
     wget \
     git \
+    git-lfs \
     python \
     calibre
 
