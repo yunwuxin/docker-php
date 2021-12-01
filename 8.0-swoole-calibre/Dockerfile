@@ -3,7 +3,7 @@ FROM topthink/php:8.0-swoole
 RUN \
     echo "deb http://ppa.topthink.com/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A1715D88E1DF1F24 && \
-    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt update && apt install -y \
     language-pack-zh-hant language-pack-zh-hans language-pack-zh-hant-base language-pack-zh-hans-base \
     language-pack-gnome-zh-hant language-pack-gnome-zh-hans language-pack-gnome-zh-hant-base language-pack-gnome-zh-hans-base \
