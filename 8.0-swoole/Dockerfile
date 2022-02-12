@@ -10,7 +10,7 @@ RUN \
 
 RUN pecl channel-update pecl.php.net
 
-RUN printf "no\nyes\nyes\nno\nyes\nyes\n" | pecl install swoole-4.7.0 && \
+RUN printf "no\nyes\nyes\nno\nyes\nyes\n" | pecl install swoole-4.8.6 && \
     echo "extension=swoole.so" > /etc/php/8.0/mods-available/swoole.ini && \
     phpenmod swoole && \
     rm -rf /tmp/*
