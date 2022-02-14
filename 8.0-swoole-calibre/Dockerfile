@@ -32,10 +32,6 @@ RUN rm -rf /tmp/*
 RUN wget -qO- https://deb.nodesource.com/setup_16.x | bash -
 RUN apt install nodejs
 RUN npm install -g npm@latest
-RUN mkdir -p /var/www/npm-global/bin
-RUN chown www-data:www-data -R /var/www
-ENV PATH="/var/www/npm-global/bin:${PATH}"
-RUN echo "PATH=\"/var/www/npm-global/bin:${PATH}\"" > /etc/environment
 
 RUN apt install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
