@@ -10,10 +10,16 @@ RUN \
 
 RUN pecl channel-update pecl.php.net
 
-RUN printf "no\nyes\nyes\nno\nyes\nyes\n" | pecl install swoole-4.8.10 && \
+RUN printf "no\nyes\nyes\nno\nyes\nyes\n" | pecl install swoole-4.8.12 && \
     echo "extension=swoole.so" > /etc/php/8.0/mods-available/swoole.ini && \
     phpenmod swoole && \
     rm -rf /tmp/*
+
+# 安装swoole tracker
+ADD swoole_tracker.so /usr/lib/php/20200930/swoole_tracker.so
+RUN mkdir -p /opt/swoole/var/run/swoole_tracker/
+RUN echo "zend_extension=swoole_tracker.so\ntracker.enable=0" > /etc/php/8.0/mods-available/swoole_tracker.ini
+RUN phpenmod swoole_tracker
 
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
