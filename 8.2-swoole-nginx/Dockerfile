@@ -1,12 +1,17 @@
 FROM topthink/php:8.2-swoole
 
 #安装nginx
-RUN echo "deb http://nginx.org/packages/ubuntu focal nginx" \
-    | tee /etc/apt/sources.list.d/nginx.list
-RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add -
+RUN apt update && apt install -y --no-install-recommends gnupg2 ca-certificates lsb-release ubuntu-keyring
+RUN curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+        | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+
+RUN echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+    http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+        | tee /etc/apt/sources.list.d/nginx.list \
+
 RUN apt update && apt install -y --no-install-recommends nginx
 
-RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+RUN apt clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
 
 #配置nginx
 ADD nginx.conf /etc/nginx/conf.d/default.conf
