@@ -1,0 +1,44 @@
+name: 8.2 swoole nginx
+on:
+  push:
+    paths:
+      - '.github/workflows/8.2-swoole-nginx.yml'
+      - '8.2-swoole-nginx/**'
+  workflow_run:
+    workflows: [ "8.2 swoole" ]
+    branches: [ main ]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Aliyun Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.cn-shanghai.aliyuncs.com
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          context: ./8.2-swoole-nginx
+          push: true
+          tags: |
+            topthink/php:8.2-swoole-nginx
+            registry.cn-shanghai.aliyuncs.com/topthink/php:8.2-swoole-nginx
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
