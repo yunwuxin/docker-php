@@ -1,5 +1,3 @@
-gzip  on;
-
 server {
     listen  80;
 
