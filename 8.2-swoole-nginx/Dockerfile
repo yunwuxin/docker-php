@@ -14,5 +14,5 @@ RUN apt update && apt install -y --no-install-recommends nginx
 RUN apt clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm /etc/apt/sources.list.d/nginx.list
 
 #配置nginx
-ADD nginx/default /etc/nginx/sites-enabled/default
+ADD nginx/default.conf /etc/nginx/sites-enabled/default.conf
 ADD supervisord.conf /etc/supervisor/conf.d/nginx.conf
