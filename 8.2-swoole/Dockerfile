@@ -12,8 +12,12 @@ RUN pecl channel-update pecl.php.net
 
 RUN printf "no\nyes\nno\nyes\nno\nno\nno\nno\nno\nyes\n" | pecl install swoole-5.1.4 && \
     echo "extension=swoole.so" > /etc/php/8.2/mods-available/swoole.ini && \
-    phpenmod swoole && \
-    rm -rf /tmp/*
+    phpenmod swoole
+
+RUN pecl install xdebug && \
+    echo "zend_extension=xdebug.so" > /etc/php/8.2/mods-available/xdebug.ini
+
+RUN rm -rf /tmp/*
 
 # 安装supervisor工具
 RUN mkdir -p /var/log/supervisor
