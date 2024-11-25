@@ -17,6 +17,10 @@ RUN printf "no\nyes\nno\nyes\nno\nno\nno\nno\nno\nyes\n" | pecl install swoole-5
 RUN pecl install xdebug && \
     echo "zend_extension=xdebug.so" > /etc/php/8.2/mods-available/xdebug.ini
 
+#安装swoole loader扩展
+ADD swoole_loader82.so /usr/lib/php/20220829/swoole_loader.so
+RUN echo "extension=swoole_loader.so" > /etc/php/8.2/mods-available/swoole_loader.ini
+
 RUN rm -rf /tmp/*
 
 # 安装supervisor工具
