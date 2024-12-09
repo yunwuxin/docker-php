@@ -34,5 +34,3 @@ RUN chown -R www-data:www-data /var/www
 CMD /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
 
 WORKDIR /opt/htdocs
-
-USER www-data
