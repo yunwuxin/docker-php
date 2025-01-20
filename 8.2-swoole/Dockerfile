@@ -20,6 +20,10 @@ RUN printf "no\nyes\nno\nyes\nno\nno\nno\nno\nno\nyes\n" | pecl install swoole-5
 ADD swoole_loader82.so /usr/lib/php/20220829/swoole_loader.so
 RUN echo "extension=swoole_loader.so" > /etc/php/8.2/mods-available/swoole_loader.ini
 
+#安装memory_tracker扩展
+ADD memory_tracker_4.1.0_linux_x64_82.so /usr/lib/php/20220829/memory_tracker.so
+RUN echo "extension=memory_tracker.so" > /etc/php/8.2/mods-available/memory_tracker.ini
+
 RUN rm -rf /tmp/*
 
 # 安装supervisor工具
