@@ -4,11 +4,6 @@ on:
     paths:
       - '.github/workflows/sandbox.yml'
       - 'sandbox/**'
-  workflow_run:
-    workflows: [ "sandbox" ]
-    branches: [ main ]
-    types:
-      - completed
 
 jobs:
   build:
