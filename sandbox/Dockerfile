@@ -16,13 +16,9 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
-    nodejs \
-    npm \
     sudo \
-    && rm -rf /var/lib/apt/lists/*
-
-# 安装 Node.js 的最新 LTS 版本
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get remove -y nodejs npm libnode-dev 2>/dev/null || true \
+    && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
