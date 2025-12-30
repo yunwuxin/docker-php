@@ -22,6 +22,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# 安装 mount-s3 (AWS S3 Mountpoint)
+RUN wget https://s3.amazonaws.com/mountpoint-s3-release/latest/x86_64/mount-s3.deb && \
+    apt-get update && apt-get install -y ./mount-s3.deb && \
+    rm -f mount-s3.deb
+
 # 使用阿里云 npm 镜像源
 RUN npm config set registry https://registry.npmmirror.com
 
