@@ -33,7 +33,6 @@ jobs:
           context: ./sandbox
           push: true
           tags: |
-            topopen/sandbox:latest
             registry.cn-shanghai.aliyuncs.com/topopen/sandbox:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
