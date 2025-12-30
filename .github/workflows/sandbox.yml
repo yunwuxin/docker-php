@@ -1,0 +1,44 @@
+name: sandbox
+on:
+  push:
+    paths:
+      - '.github/workflows/sandbox.yml'
+      - 'sandbox/**'
+  workflow_run:
+    workflows: [ "sandbox" ]
+    branches: [ main ]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Aliyun Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.cn-shanghai.aliyuncs.com
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          context: ./sandbox
+          push: true
+          tags: |
+            topopen/sandbox:latest
+            registry.cn-shanghai.aliyuncs.com/topopen/sandbox:latest
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
