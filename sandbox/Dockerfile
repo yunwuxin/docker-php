@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
+    pandoc \
     sudo \
     && apt-get remove -y nodejs npm libnode-dev 2>/dev/null || true \
     && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
