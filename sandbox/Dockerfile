@@ -24,12 +24,6 @@ RUN apt-get update && apt-get install -y \
 # 使用阿里云 npm 镜像源
 RUN npm config set registry https://registry.npmmirror.com
 
-# 创建 ubuntu 用户和组
-RUN groupadd -r ubuntu \
-    && useradd -r -g ubuntu -d /home/ubuntu -s /bin/bash ubuntu \
-    && mkdir -p /home/ubuntu \
-    && chown -R ubuntu:ubuntu /home/ubuntu
-
 # 为 ubuntu 用户添加 sudo 权限
 RUN usermod -aG sudo ubuntu
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
