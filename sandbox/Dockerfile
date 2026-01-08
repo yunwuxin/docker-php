@@ -1,6 +1,10 @@
 # 基于 Ubuntu 24.04
 FROM ubuntu:24.04
 
+# 设置环境变量支持 UTF-8 编码
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
 
