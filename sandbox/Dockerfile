@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     python3 \
     python3-pip \
+    python3-venv \
     pandoc \
     sudo \
     && apt-get remove -y nodejs npm libnode-dev 2>/dev/null || true \
@@ -27,6 +28,10 @@ RUN apt-get update && apt-get install -y \
 
 # 使用阿里云 npm 镜像源
 RUN npm config set registry https://registry.npmmirror.com
+
+# 设置 pip 国内镜像（系统级），使用阿里云镜像
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple
+RUN printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple\n' > /etc/pip.conf
 
 # 为 ubuntu 用户添加 sudo 权限
 RUN usermod -aG sudo ubuntu
