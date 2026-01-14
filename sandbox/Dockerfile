@@ -6,9 +6,9 @@ ENV HOSTNAME=sandbox
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 更换为阿里云镜像源
-RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list && \
-    sed -i "s/security.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+# 更换为阿里云镜像源（兼容 DEB822 `.sources` 文件）
+RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
+    sed -i 's|security.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true
 
 # 更新包列表并安装必要的软件包
 RUN apt-get update && apt-get install -y \
@@ -16,16 +16,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     software-properties-common \
-    ffmpeg \
     sudo \
     && rm -rf /var/lib/apt/lists/*
-
-# Install Google Chrome
-RUN add-apt-repository ppa:xtradeb/apps -y && \
-    apt-get update && \
-    apt-get install -y chromium  --no-install-recommends && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
@@ -57,7 +49,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure npm to use Aliyun mirror
-RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set registry https://registry.npmmirror.com -g
 
 # 为 ubuntu 用户添加 sudo 权限
 RUN usermod -aG sudo ubuntu
