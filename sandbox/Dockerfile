@@ -16,8 +16,16 @@ RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     software-properties-common \
+    ffmpeg \
     sudo \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Google Chrome
+RUN add-apt-repository ppa:xtradeb/apps -y && \
+    apt-get update && \
+    apt-get install -y chromium  --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
