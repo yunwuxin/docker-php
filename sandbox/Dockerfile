@@ -51,23 +51,23 @@ RUN mkdir -p /etc/apt/keyrings && \
     apt-get install -y nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+    
+# 为 ubuntu 用户添加 sudo 权限
+RUN usermod -aG sudo ubuntu
+RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+RUN mkdir /workspace && chown ubuntu:ubuntu /workspace
+
+# 切换到 ubuntu 用户
+USER ubuntu
 
 # Configure npm to use Aliyun mirror
 RUN npm config set registry https://registry.npmmirror.com -g
 RUN npm install pptxgenjs playwright sharp docx -g
 RUN npx playwright install chromium --with-deps
 
-# 为 ubuntu 用户添加 sudo 权限
-RUN usermod -aG sudo ubuntu
-RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
 # 设置工作目录
-WORKDIR /home/ubuntu
-
-# 切换到 ubuntu 用户
-USER ubuntu
-
-ENV UVI_ARGS=""
+WORKDIR /workspace
 
 # 设置默认命令
 ENTRYPOINT ["sleep" "infinity"]
