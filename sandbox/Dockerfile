@@ -61,10 +61,17 @@ RUN mkdir /workspace && chown ubuntu:ubuntu /workspace
 # 切换到 ubuntu 用户
 USER ubuntu
 
-# Configure npm to use Aliyun mirror
-RUN npm config set registry https://registry.npmmirror.com -g
-RUN npm install pptxgenjs playwright sharp docx -g
-RUN npx playwright install chromium --with-deps
+# Configure npm for the ubuntu user only:
+# - set registry to Aliyun (written to ~/.npmrc)
+# - set a user-local prefix so `npm install -g` installs into the user's home
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set prefix /home/ubuntu/.npm-global && \
+    mkdir -p /home/ubuntu/.npm-global && \
+    npm install -g pptxgenjs playwright sharp docx && \
+    npx playwright install chromium --with-deps
+
+# Ensure user's npm global bin is on PATH
+ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 
 # 设置工作目录
 WORKDIR /workspace
