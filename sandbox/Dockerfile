@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     gnupg \
+    ffmpeg \
+    pandoc \
     software-properties-common \
     sudo \
     && rm -rf /var/lib/apt/lists/*
@@ -37,7 +39,9 @@ RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+# Configure pip to use Aliyun mirror system-wide and via env (safe if /home is mounted)
+RUN printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple/' > /etc/pip.conf
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
 
 # Install Node.js 20.18.0
 RUN mkdir -p /etc/apt/keyrings && \
@@ -50,7 +54,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 # Configure npm to use Aliyun mirror
 RUN npm config set registry https://registry.npmmirror.com -g
-RUN npm install pptxgenjs playwright sharp -g
+RUN npm install pptxgenjs playwright sharp docx -g
 RUN npx playwright install chromium --with-deps
 
 # 为 ubuntu 用户添加 sudo 权限
