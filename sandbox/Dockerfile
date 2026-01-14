@@ -50,6 +50,8 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 # Configure npm to use Aliyun mirror
 RUN npm config set registry https://registry.npmmirror.com -g
+RUN npm install pptxgenjs playwright sharp -g
+RUN npx playwright install chromium --with-deps
 
 # 为 ubuntu 用户添加 sudo 权限
 RUN usermod -aG sudo ubuntu
