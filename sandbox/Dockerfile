@@ -72,7 +72,7 @@ RUN npm config set registry https://registry.npmmirror.com && \
 
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
-
+ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 # 设置工作目录
 WORKDIR /workspace
 
