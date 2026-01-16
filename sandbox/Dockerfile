@@ -73,6 +73,13 @@ RUN npm config set registry https://registry.npmmirror.com && \
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
+
+# Configure matplotlib for Chinese fonts
+RUN mkdir -p /home/ubuntu/.config/matplotlib && \
+    echo "font.sans-serif: Noto Sans CJK SC, Noto Sans CJK TC, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
+    echo "axes.unicode_minus: False" >> /home/ubuntu/.config/matplotlib/matplotlibrc && \
+    echo "font.family: sans-serif" >> /home/ubuntu/.config/matplotlib/matplotlibrc
+
 # 设置工作目录
 WORKDIR /workspace
 
