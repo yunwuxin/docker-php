@@ -76,7 +76,7 @@ ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 
 # Configure matplotlib for Chinese fonts
 RUN mkdir -p /home/ubuntu/.config/matplotlib && \
-    echo "font.sans-serif: Noto Sans CJK SC, Noto Sans CJK TC, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
+    echo "font.sans-serif: Noto Sans CJK JP, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "axes.unicode_minus: False" >> /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "font.family: sans-serif" >> /home/ubuntu/.config/matplotlib/matplotlibrc
 
