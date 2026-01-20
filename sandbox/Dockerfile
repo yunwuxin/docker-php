@@ -74,6 +74,9 @@ RUN npm config set registry https://registry.npmmirror.com && \
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 
+# Install Python packages: matplotlib and pandas
+RUN pip3 install --user matplotlib pandas
+
 # Configure matplotlib for Chinese fonts
 RUN mkdir -p /home/ubuntu/.config/matplotlib && \
     echo "font.sans-serif: Noto Sans CJK JP, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
