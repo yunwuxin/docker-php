@@ -20,7 +20,10 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     sudo \
     && rm -rf /var/lib/apt/lists/*
-    
+
+RUN ls -l /usr/bin/X11
+RUN rm -f /usr/bin/X11
+
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
     fonts-noto-cjk \
@@ -29,8 +32,7 @@ RUN apt-get update && apt-get install -y \
     locales \
     && locale-gen zh_CN.UTF-8 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -f /usr/bin/X11
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Python 3.10.12
 RUN add-apt-repository ppa:deadsnakes/ppa && \
