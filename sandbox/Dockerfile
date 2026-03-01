@@ -5,7 +5,7 @@ ENV HOSTNAME=sandbox
 
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
-
+RUN ls -l /usr/bin/X11
 # 更换为阿里云镜像源（兼容 DEB822 `.sources` 文件）
 RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
     sed -i 's|security.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true
