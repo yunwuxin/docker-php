@@ -5,7 +5,7 @@ ENV HOSTNAME=sandbox
 
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
-RUN ls -l /usr/bin/X11
+
 # 更换为阿里云镜像源（兼容 DEB822 `.sources` 文件）
 RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
     sed -i 's|security.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true
@@ -20,8 +20,6 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     sudo \
     && rm -rf /var/lib/apt/lists/*
-
-RUN ls -l /usr/bin/X11
     
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
@@ -31,9 +29,8 @@ RUN apt-get update && apt-get install -y \
     locales \
     && locale-gen zh_CN.UTF-8 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN ls -l /usr/bin/X11    
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -f /usr/bin/X11
 
 # Install Python 3.10.12
 RUN add-apt-repository ppa:deadsnakes/ppa && \
@@ -42,7 +39,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN ls -l /usr/bin/X11
+
 # Configure pip to use Aliyun mirror system-wide and via env (safe if /home is mounted)
 RUN printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple/' > /etc/pip.conf
 ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
@@ -55,8 +52,6 @@ RUN mkdir -p /etc/apt/keyrings && \
     apt-get install -y nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-RUN rm -f /usr/bin/X11
 
 # 为 ubuntu 用户添加 sudo 权限
 RUN usermod -aG sudo ubuntu
