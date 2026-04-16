@@ -14,6 +14,8 @@ RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /et
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
+    zip \
+    unzip \
     gnupg \
     ffmpeg \
     pandoc \
