@@ -70,9 +70,7 @@ USER ubuntu
 # - set a user-local prefix so `npm install -g` installs into the user's home
 RUN npm config set registry https://registry.npmmirror.com && \
     npm config set prefix /home/ubuntu/.npm-global && \
-    mkdir -p /home/ubuntu/.npm-global && \
-    npm install -g pptxgenjs playwright sharp docx && \
-    npx playwright install chromium --with-deps
+    mkdir -p /home/ubuntu/.npm-global
 
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
@@ -86,6 +84,9 @@ RUN mkdir -p /home/ubuntu/.config/matplotlib && \
     echo "font.sans-serif: Noto Sans CJK JP, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "axes.unicode_minus: False" >> /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "font.family: sans-serif" >> /home/ubuntu/.config/matplotlib/matplotlibrc
+
+# Install browser-use globally for the ubuntu user
+RUN curl -fsSL https://browser-use.com/cli/install.sh | bash
 
 # 设置工作目录
 WORKDIR /workspace
