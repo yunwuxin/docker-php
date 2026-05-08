@@ -70,13 +70,15 @@ USER ubuntu
 # - set a user-local prefix so `npm install -g` installs into the user's home
 RUN npm config set registry https://registry.npmmirror.com && \
     npm config set prefix /home/ubuntu/.npm-global && \
-    mkdir -p /home/ubuntu/.npm-global && \
-    npm install -g @playwright/cli@latest && \
-    playwright-cli install
+    mkdir -p /home/ubuntu/.npm-global 
 
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
+
+# Install Playwright CLI and browsers globally for the ubuntu user
+RUN npm install -g @playwright/cli@latest && \
+    playwright-cli install
 
 # Install Python packages: matplotlib and pandas
 RUN pip3 install --user matplotlib pandas
