@@ -6,9 +6,8 @@ ENV HOSTNAME=sandbox
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 更换为腾讯云镜像源（兼容 DEB822 `.sources` 文件）
-RUN sed -i 's|archive.ubuntu.com|mirrors.tencent.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
-    sed -i 's|security.ubuntu.com|mirrors.tencent.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true
+# 复制 ubuntu 源配置文件
+COPY ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources
 
 # 更新包列表并安装必要的软件包
 RUN apt-get update && apt-get install -y \
