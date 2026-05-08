@@ -14,6 +14,7 @@ RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /et
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
+    git \
     zip \
     unzip \
     gnupg \
