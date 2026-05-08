@@ -14,7 +14,6 @@ RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /et
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
-    git \
     zip \
     unzip \
     gnupg \
@@ -71,7 +70,9 @@ USER ubuntu
 # - set a user-local prefix so `npm install -g` installs into the user's home
 RUN npm config set registry https://registry.npmmirror.com && \
     npm config set prefix /home/ubuntu/.npm-global && \
-    mkdir -p /home/ubuntu/.npm-global
+    mkdir -p /home/ubuntu/.npm-global && \
+    npm install -g @playwright/cli@latest && \
+    playwright-cli install
 
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
@@ -85,9 +86,6 @@ RUN mkdir -p /home/ubuntu/.config/matplotlib && \
     echo "font.sans-serif: Noto Sans CJK JP, DejaVu Sans, sans-serif" > /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "axes.unicode_minus: False" >> /home/ubuntu/.config/matplotlib/matplotlibrc && \
     echo "font.family: sans-serif" >> /home/ubuntu/.config/matplotlib/matplotlibrc
-
-# Install browser-use globally for the ubuntu user
-RUN curl -fsSL https://browser-use.com/cli/install.sh | bash
 
 # 设置工作目录
 WORKDIR /workspace
