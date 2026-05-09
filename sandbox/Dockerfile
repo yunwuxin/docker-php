@@ -77,7 +77,7 @@ ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 RUN npm install -g @playwright/cli@latest && \
     playwright-cli install-browser chromium --with-deps
 RUN mkdir -p /home/ubuntu/.playwright && \
-    echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium"},"contextOptions":{"viewport":{"width":1920,"height":1080}}}}' > /home/ubuntu/.playwright/cli.config.json
+    echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}}}' > /home/ubuntu/.playwright/cli.config.json
 
 # Install Python packages: matplotlib and pandas
 RUN pip3 install --user matplotlib pandas
