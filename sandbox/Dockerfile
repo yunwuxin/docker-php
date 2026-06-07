@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -y \
     sudo \
     xvfb \
     x11vnc \
-    netcat-openbsd
+    netcat-openbsd \
+    file
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
