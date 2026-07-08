@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y \
     x11vnc \
     netcat-openbsd \
     file \
-    git
+    git \
+    s3fs
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
