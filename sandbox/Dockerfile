@@ -29,6 +29,9 @@ RUN apt-get update && apt-get install -y \
     git \
     s3fs
 
+# 允许 FUSE 挂载对其他用户可见
+RUN sed -i 's/#user_allow_other/user_allow_other/' /etc/fuse.conf
+
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
     fonts-noto-cjk \
