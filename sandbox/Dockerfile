@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
     netcat-openbsd \
     file \
     git \
-    s3fs
+    rclone
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
