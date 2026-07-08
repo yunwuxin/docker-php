@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y \
     netcat-openbsd \
     file \
     git \
-    rclone
+    rclone \
+    fuse3
 
 # Install Chinese fonts and language support
 RUN apt-get update && apt-get install -y \
