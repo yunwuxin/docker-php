@@ -85,7 +85,7 @@ RUN npm install -g @playwright/cli@latest && \
 RUN mkdir -p /home/ubuntu/.playwright && \
     echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}}}' > /home/ubuntu/.playwright/cli.config.json
 
-RUN npm install -g @topthink/ai@1.0.2
+RUN npm install -g @topthink/ai@1.0.3
 
 # Install Python packages: matplotlib and pandas
 RUN pip3 install --user matplotlib pandas
