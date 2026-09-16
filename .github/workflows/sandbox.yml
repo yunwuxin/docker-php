@@ -29,6 +29,8 @@ jobs:
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v3
+        env:
+          BUILDX_NO_DEFAULT_ATTESTATIONS: 1
         with:
           context: ./sandbox
           push: true
