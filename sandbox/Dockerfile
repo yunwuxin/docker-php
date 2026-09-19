@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
     netcat-openbsd \
     file \
     git \
+    git-lfs \
     s3fs
 
 # 允许 FUSE 挂载对其他用户可见
