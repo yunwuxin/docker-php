@@ -35,15 +35,13 @@ RUN apt-get update && apt-get install -y \
     locales \
     && locale-gen zh_CN.UTF-8
 
-# Install Python 3 on Ubuntu. The system Python does not support ensurepip,
-# so install the official Python packages and the python symlink via apt.
+# Install Python 3 on Ubuntu using the distro packages. The system Python is
+# externally managed, so we avoid direct pip installs into it and instead use
+# a dedicated virtual environment for project dependencies.
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
-    python3-venv \
-    python-is-python3 && \
-    python3 --version && \
-    python --version
+    python3-venv
 
 # Install Node.js 20.18.0
 RUN mkdir -p /etc/apt/keyrings && \
@@ -61,15 +59,19 @@ RUN mkdir /workspace && chown ubuntu:ubuntu /workspace
 # 切换到 ubuntu 用户
 USER ubuntu
 
-# Configure a user-local prefix so `npm install -g` installs into the user's home
+# =========================
+# Node.js environment
+# =========================
+
+# Configure a user-local prefix so `npm install -g` installs into the user's home.
 ENV NPM_CONFIG_PREFIX=/home/ubuntu/.npm-global
 RUN mkdir -p /home/ubuntu/.npm-global
 
-# Ensure user's npm global bin is on PATH
+# Ensure user's npm global bin is on PATH.
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 
-# Install Playwright CLI and browsers globally for the ubuntu user
+# Install Playwright CLI and browsers globally for the ubuntu user.
 RUN npm install -g playwright@1.63.0-alpha-2026-08-31 @playwright/cli@0.1.19 && \
     playwright-cli install-browser chromium --with-deps
 RUN mkdir -p /home/ubuntu/.playwright && \
@@ -78,8 +80,20 @@ RUN mkdir -p /home/ubuntu/.playwright && \
 RUN npm install -g @topthink/ai@1.0.3 && \
     npm cache clean --force
 
-# Install Python packages: matplotlib and pandas
-RUN pip3 install --no-cache-dir --user matplotlib pandas playwright==1.63.0
+# =========================
+# Python environment
+# =========================
+
+# Create a dedicated Python virtual environment for the ubuntu user.
+ENV VIRTUAL_ENV=/home/ubuntu/.venv
+RUN python3 -m venv "$VIRTUAL_ENV"
+
+# Ensure the venv's bin directory is on PATH before the system Python.
+ENV PATH=/home/ubuntu/.venv/bin:$PATH
+
+# Install Python packages into the project venv so the default `python` command
+# resolves to the virtual environment instead of the system interpreter.
+RUN python -m pip install --no-cache-dir matplotlib pandas playwright==1.63.0
 
 # Configure matplotlib for Chinese fonts
 RUN mkdir -p /home/ubuntu/.config/matplotlib && \
