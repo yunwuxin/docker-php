@@ -35,11 +35,15 @@ RUN apt-get update && apt-get install -y \
     locales \
     && locale-gen zh_CN.UTF-8
 
-# Install Python 3（python3 会带入 3.12，venv 提供 ensurepip 用于安装 pip）
-RUN apt-get update && apt-get install -y python3 python3-venv && \
-    python3 -m ensurepip --upgrade && \
-    # provide a "python" command for convenience
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+# Install Python 3 on Ubuntu. The system Python does not support ensurepip,
+# so install the official Python packages and the python symlink via apt.
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python-is-python3 && \
+    python3 --version && \
+    python --version
 
 # Install Node.js 20.18.0
 RUN mkdir -p /etc/apt/keyrings && \
