@@ -44,10 +44,11 @@ RUN apt-get update && apt-get install -y \
 # Install Python 3.10.12
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y python3.10 python3.10-venv python3.10-dev python3-pip && \
+    apt-get install -y python3.10 python3.10-venv python3.10-dev && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && \
     # also provide a "python" command for convenience
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
+    python3.10 -m ensurepip --upgrade
 
 # Configure pip to use Aliyun mirror system-wide and via env (safe if /home is mounted)
 RUN printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple/' > /etc/pip.conf
@@ -86,10 +87,11 @@ RUN npm install -g playwright@1.63.0-alpha-2026-08-31 @playwright/cli@0.1.19 && 
 RUN mkdir -p /home/ubuntu/.playwright && \
     echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}},"allowUnrestrictedFileAccess":true}' > /home/ubuntu/.playwright/cli.config.json
 
-RUN npm install -g @topthink/ai@1.0.3
+RUN npm install -g @topthink/ai@1.0.3 && \
+    npm cache clean --force
 
 # Install Python packages: matplotlib and pandas
-RUN pip3 install --user matplotlib pandas playwright==1.63.0
+RUN pip3 install --no-cache-dir --user matplotlib pandas playwright==1.63.0
 
 # Configure matplotlib for Chinese fonts
 RUN mkdir -p /home/ubuntu/.config/matplotlib && \
