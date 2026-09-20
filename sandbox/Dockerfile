@@ -6,11 +6,6 @@ ENV HOSTNAME=sandbox
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 更换为阿里云镜像源（兼容 DEB822 `.sources` 文件）
-RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
-    sed -i 's|security.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true
-
-
 # 更新包列表并安装必要的软件包
 RUN apt-get update && apt-get install -y \
     curl \
@@ -46,10 +41,6 @@ RUN apt-get update && apt-get install -y python3 python3-venv && \
     # provide a "python" command for convenience
     update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
-# Configure pip to use Aliyun mirror system-wide and via env (safe if /home is mounted)
-RUN printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple/' > /etc/pip.conf
-ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
-
 # Install Node.js 20.18.0
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
@@ -66,12 +57,9 @@ RUN mkdir /workspace && chown ubuntu:ubuntu /workspace
 # 切换到 ubuntu 用户
 USER ubuntu
 
-# Configure npm for the ubuntu user only:
-# - set registry to Aliyun (written to ~/.npmrc)
-# - set a user-local prefix so `npm install -g` installs into the user's home
-RUN npm config set registry https://registry.npmmirror.com && \
-    npm config set prefix /home/ubuntu/.npm-global && \
-    mkdir -p /home/ubuntu/.npm-global
+# Configure a user-local prefix so `npm install -g` installs into the user's home
+ENV NPM_CONFIG_PREFIX=/home/ubuntu/.npm-global
+RUN mkdir -p /home/ubuntu/.npm-global
 
 # Ensure user's npm global bin is on PATH
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
@@ -99,6 +87,15 @@ RUN sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
 
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+
+# Configure Chinese mirrors for container runtime only. Build dependencies above use official sources.
+USER root
+RUN sed -i 's|archive.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
+    sed -i 's|security.ubuntu.com|mirrors.aliyun.com|g' /etc/apt/sources.list /etc/apt/sources.list.d/*.sources 2>/dev/null || true && \
+    printf '[global]\nindex-url = https://mirrors.aliyun.com/pypi/simple/\n' > /etc/pip.conf
+ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple/
+ENV NPM_CONFIG_REGISTRY=https://registry.npmmirror.com
+USER ubuntu
 
 # 设置工作目录
 WORKDIR /workspace
