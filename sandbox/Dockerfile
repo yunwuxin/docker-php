@@ -81,15 +81,15 @@ ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 
 # Install Playwright CLI and browsers globally for the ubuntu user
-RUN npm install -g @playwright/cli@latest && \
+RUN npm install -g playwright@1.63.0-alpha-2026-08-31 @playwright/cli@0.1.19 && \
     playwright-cli install-browser chromium --with-deps
 RUN mkdir -p /home/ubuntu/.playwright && \
-    echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}}}' > /home/ubuntu/.playwright/cli.config.json
+    echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}},"allowUnrestrictedFileAccess":true}' > /home/ubuntu/.playwright/cli.config.json
 
 RUN npm install -g @topthink/ai@1.0.3
 
 # Install Python packages: matplotlib and pandas
-RUN pip3 install --user matplotlib pandas
+RUN pip3 install --user matplotlib pandas playwright==1.63.0
 
 # Configure matplotlib for Chinese fonts
 RUN mkdir -p /home/ubuntu/.config/matplotlib && \
@@ -99,6 +99,8 @@ RUN mkdir -p /home/ubuntu/.config/matplotlib && \
 
 RUN sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
+
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 
 # 设置工作目录
 WORKDIR /workspace
