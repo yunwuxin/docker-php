@@ -71,13 +71,18 @@ RUN mkdir -p /home/ubuntu/.npm-global
 ENV PATH=/home/ubuntu/.npm-global/bin:$PATH
 ENV NODE_PATH=/home/ubuntu/.npm-global/lib/node_modules
 
+# Resolve bare ESM imports from the user's global npm package directory.
+COPY global-esm-loader.mjs /usr/local/lib/global-esm-loader.mjs
+COPY global-esm-register.mjs /usr/local/lib/global-esm-register.mjs
+ENV NODE_OPTIONS=--import=/usr/local/lib/global-esm-register.mjs
+
 # Install Playwright CLI and browsers globally for the ubuntu user.
 RUN npm install -g playwright@1.63.0-alpha-2026-08-31 @playwright/cli@0.1.19 && \
     playwright-cli install-browser chromium --with-deps
 RUN mkdir -p /home/ubuntu/.playwright && \
     echo '{"browser":{"browserName":"chromium","launchOptions":{"channel":"chromium","args":["--window-position=0,0"]},"contextOptions":{"viewport":{"width":1920,"height":1080}}},"allowUnrestrictedFileAccess":true}' > /home/ubuntu/.playwright/cli.config.json
 
-RUN npm install -g @topthink/ai@1.0.3 && \
+RUN npm install -g @topthink/ai@1.0.6 && \
     npm cache clean --force
 
 # =========================
